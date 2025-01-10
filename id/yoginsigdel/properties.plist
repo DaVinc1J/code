@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CIN</key>
+	<string>D03067613</string>
+	<key>Address</key>
+	<string>3 MASTERS AVENUE OAKLAND PARK SA 5046</string>
+	<key>Name</key>
+	<string>YOGIN SIGDEL</string>
+	<key>DOB</key>
+	<string>25/05/2005</string>
+	<key>LicenceNumber</key>
+	<string>HM8259</string>
+	<key>PED</key>
+	<string>1 June 2026</string>
+	<key>LED</key>
+	<string>1 June 2023</string>
+	<key>name padding leading</key>
+	<string>geometry.size.height * -0.27</string>
+	<key>address padding leading</key>
+	<string>geometry.size.height * -0.055</string>
+	<key>expiration date padding leading</key>
+	<string>geometry.size.width * -0.375</string>
+</dict>
+</plist>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+ <key>clang_version</key>
+<string>Apple clang version 16.0.0 (clang-1600.0.26.3)</string>
+ <key>diagnostics</key>
+ <array>
+  <dict>
+   <key>path</key>
+   <array>
+    <dict>
+     <key>kind</key><string>event</string>
+     <key>location</key>
+     <dict>
+      <key>line</key><integer>363</integer>
+      <key>col</key><integer>7</integer>
+      <key>file</key><integer>0</integer>
+     </dict>
+     <key>ranges</key>
+     <array>
+       <array>
+        <dict>
+         <key>line</key><integer>363</integer>
+         <key>col</key><integer>15</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+        <dict>
+         <key>line</key><integer>363</integer>
+         <key>col</key><integer>46</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+       </array>
+     </array>
+     <key>depth</key><integer>0</integer>
+     <key>extended_message</key>
+     <string>Value stored to &apos;input&apos; is never read</string>
+     <key>message</key>
+     <string>Value stored to &apos;input&apos; is never read</string>
+    </dict>
+   </array>
+   <key>description</key><string>Value stored to &apos;input&apos; is never read</string>
+   <key>category</key><string>Unused code</string>
+   <key>type</key><string>Dead assignment</string>
+   <key>check_name</key><string>deadcode.DeadStores</string>
+   <!-- This hash is experimental and going to change! -->
+   <key>issue_hash_content_of_line_in_context</key><string>3061b60a1dc7f989770dfe1f78f8663c</string>
+  <key>issue_context_kind</key><string>function</string>
+  <key>issue_context</key><string>check_events</string>
+  <key>issue_hash_function_offset</key><string>78</string>
+  <key>location</key>
+  <dict>
+   <key>line</key><integer>363</integer>
+   <key>col</key><integer>7</integer>
+   <key>file</key><integer>0</integer>
+  </dict>
+  <key>ExecutedLines</key>
+  <dict>
+   <key>0</key>
+   <array>
+    <integer>363</integer>
+   </array>
+  </dict>
+  </dict>
+  <dict>
+   <key>path</key>
+   <array>
+    <dict>
+     <key>kind</key><string>event</string>
+     <key>location</key>
+     <dict>
+      <key>line</key><integer>366</integer>
+      <key>col</key><integer>7</integer>
+      <key>file</key><integer>0</integer>
+     </dict>
+     <key>ranges</key>
+     <array>
+       <array>
+        <dict>
+         <key>line</key><integer>366</integer>
+         <key>col</key><integer>14</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+        <dict>
+         <key>line</key><integer>366</integer>
+         <key>col</key><integer>44</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+       </array>
+     </array>
+     <key>depth</key><integer>0</integer>
+     <key>extended_message</key>
+     <string>Value stored to &apos;text&apos; is never read</string>
+     <key>message</key>
+     <string>Value stored to &apos;text&apos; is never read</string>
+    </dict>
+   </array>
+   <key>description</key><string>Value stored to &apos;text&apos; is never read</string>
+   <key>category</key><string>Unused code</string>
+   <key>type</key><string>Dead assignment</string>
+   <key>check_name</key><string>deadcode.DeadStores</string>
+   <!-- This hash is experimental and going to change! -->
+   <key>issue_hash_content_of_line_in_context</key><string>905f1c8398bbdf5945f211efc3c27ec1</string>
+  <key>issue_context_kind</key><string>function</string>
+  <key>issue_context</key><string>check_events</string>
+  <key>issue_hash_function_offset</key><string>81</string>
+  <key>location</key>
+  <dict>
+   <key>line</key><integer>366</integer>
+   <key>col</key><integer>7</integer>
+   <key>file</key><integer>0</integer>
+  </dict>
+  <key>ExecutedLines</key>
+  <dict>
+   <key>0</key>
+   <array>
+    <integer>366</integer>
+   </array>
+  </dict>
+  </dict>
+  <dict>
+   <key>path</key>
+   <array>
+    <dict>
+     <key>kind</key><string>event</string>
+     <key>location</key>
+     <dict>
+      <key>line</key><integer>574</integer>
+      <key>col</key><integer>48</integer>
+      <key>file</key><integer>0</integer>
+     </dict>
+     <key>ranges</key>
+     <array>
+       <array>
+        <dict>
+         <key>line</key><integer>574</integer>
+         <key>col</key><integer>48</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+        <dict>
+         <key>line</key><integer>574</integer>
+         <key>col</key><integer>53</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+       </array>
+       <array>
+        <dict>
+         <key>line</key><integer>574</integer>
+         <key>col</key><integer>55</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+        <dict>
+         <key>line</key><integer>574</integer>
+         <key>col</key><integer>74</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+       </array>
+       <array>
+        <dict>
+         <key>line</key><integer>574</integer>
+         <key>col</key><integer>32</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+        <dict>
+         <key>line</key><integer>574</integer>
+         <key>col</key><integer>46</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+       </array>
+     </array>
+     <key>depth</key><integer>0</integer>
+     <key>extended_message</key>
+     <string>Result of &apos;malloc&apos; is converted to a pointer of type &apos;generic_rect *&apos;, which is incompatible with sizeof operand type &apos;generic_rect&apos;</string>
+     <key>message</key>
+     <string>Result of &apos;malloc&apos; is converted to a pointer of type &apos;generic_rect *&apos;, which is incompatible with sizeof operand type &apos;generic_rect&apos;</string>
+    </dict>
+   </array>
+   <key>description</key><string>Result of &apos;malloc&apos; is converted to a pointer of type &apos;generic_rect *&apos;, which is incompatible with sizeof operand type &apos;generic_rect&apos;</string>
+   <key>category</key><string>Unix API</string>
+   <key>type</key><string>Allocator sizeof operand mismatch</string>
+   <key>check_name</key><string>unix.MallocSizeof</string>
+   <!-- This hash is experimental and going to change! -->
+   <key>issue_hash_content_of_line_in_context</key><string>0a6d6fb745e7730a10f0c83e17e7432c</string>
+  <key>issue_context_kind</key><string>function</string>
+  <key>issue_context</key><string>main</string>
+  <key>issue_hash_function_offset</key><string>133</string>
+  <key>location</key>
+  <dict>
+   <key>line</key><integer>574</integer>
+   <key>col</key><integer>48</integer>
+   <key>file</key><integer>0</integer>
+  </dict>
+  <key>ExecutedLines</key>
+  <dict>
+   <key>0</key>
+   <array>
+    <integer>574</integer>
+   </array>
+  </dict>
+  </dict>
+ </array>
+ <key>files</key>
+ <array>
+  <string>main.c</string>
+ </array>
+</dict>
+</plist>

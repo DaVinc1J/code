@@ -1,0 +1,2 @@
+CompileFlags:
+  Add: [-F/Library/Frameworks, -framework, SDL2]

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CIN</key>
+	<string>D04456912</string>
+	<key>Address</key>
+	<string>UNIT 1 9 FIFTH AVE WARRADALE SA 5046</string>
+	<key>Name</key>
+	<string>ANH TAM NGUYEN</string>
+	<key>DOB</key>
+	<string>18/10/2006</string>
+	<key>LicenceNumber</key>
+	<string>HG8131</string>
+	<key>PED</key>
+	<string>20 October 2027</string>
+	<key>LED</key>
+	<string>20 October 2024</string>
+</dict>
+</plist>

@@ -1,0 +1,11 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     reader.0.0
+relocations:
+  - { offset: 0x26, size: 0x8, addend: 0x0, symName: _copy_shared_rect, symObjAddr: 0x0, symBinAddr: 0x100002C10, symSize: 0x660 }
+  - { offset: 0x4D5, size: 0x8, addend: 0x0, symName: _copy_shared_rect, symObjAddr: 0x0, symBinAddr: 0x100002C10, symSize: 0x660 }
+  - { offset: 0x571, size: 0x8, addend: 0x0, symName: _copy_to_button_rect, symObjAddr: 0x660, symBinAddr: 0x100003270, symSize: 0x13C }
+  - { offset: 0x5CF, size: 0x8, addend: 0x0, symName: _copy_to_text_rect, symObjAddr: 0x79C, symBinAddr: 0x1000033AC, symSize: 0x13C }
+  - { offset: 0x62D, size: 0x8, addend: 0x0, symName: _copy_to_input_rect, symObjAddr: 0x8D8, symBinAddr: 0x1000034E8, symSize: 0x2E8 }
+  - { offset: 0x6BA, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0xBC0, symBinAddr: 0x1000037D0, symSize: 0x4B8 }
+...

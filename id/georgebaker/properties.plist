@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CIN</key>
+	<string>D03125211</string>
+	<key>Address</key>
+	<string>87 GOULD RD CURRENCY CREEK SA 5214</string>
+	<key>Name</key>
+	<string>GEORGE JAMES BAKER-FOSTER</string>
+	<key>DOB</key>
+	<string>22/07/2006</string>
+	<key>LicenceNumber</key>
+	<string>HL9266</string>
+	<key>PED</key>
+	<string>28 September 2027</string>
+	<key>LED</key>
+	<string>28 September 2024</string>
+</dict>
+</plist>

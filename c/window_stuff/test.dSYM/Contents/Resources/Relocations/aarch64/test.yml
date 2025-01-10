@@ -1,0 +1,21 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     test
+relocations:
+  - { offset: 0x41, size: 0x8, addend: 0x0, symName: _font_paths, symObjAddr: 0x100, symBinAddr: 0x100008000, symSize: 0x0 }
+  - { offset: 0x6C, size: 0x8, addend: 0x0, symName: _font_sizes, symObjAddr: 0x120, symBinAddr: 0x100003F7C, symSize: 0x0 }
+  - { offset: 0xB3, size: 0x8, addend: 0x0, symName: _update_texture, symObjAddr: 0x0, symBinAddr: 0x10000169C, symSize: 0x24 }
+  - { offset: 0xC0, size: 0x8, addend: 0x0, symName: _render_rects, symObjAddr: 0x24, symBinAddr: 0x1000016C0, symSize: 0xD54 }
+  - { offset: 0xE1, size: 0x8, addend: 0x0, symName: _render_rects.old_time, symObjAddr: 0xA11C, symBinAddr: 0x100008020, symSize: 0x0 }
+  - { offset: 0xB99, size: 0x8, addend: 0x0, symName: _update_texture, symObjAddr: 0x0, symBinAddr: 0x10000169C, symSize: 0x24 }
+  - { offset: 0xBF9, size: 0x8, addend: 0x0, symName: _render_objects, symObjAddr: 0xD78, symBinAddr: 0x100002414, symSize: 0xB4 }
+  - { offset: 0xCE9, size: 0x8, addend: 0x0, symName: _check_events, symObjAddr: 0xE2C, symBinAddr: 0x1000024C8, symSize: 0xB38 }
+  - { offset: 0xF28, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x1964, symBinAddr: 0x100003000, symSize: 0x7D8 }
+  - { offset: 0x2103, size: 0x8, addend: 0x0, symName: _set_state, symObjAddr: 0x0, symBinAddr: 0x1000037D8, symSize: 0x4C }
+  - { offset: 0x2821, size: 0x8, addend: 0x0, symName: _set_state, symObjAddr: 0x0, symBinAddr: 0x1000037D8, symSize: 0x4C }
+  - { offset: 0x2853, size: 0x8, addend: 0x0, symName: _clear_state, symObjAddr: 0x4C, symBinAddr: 0x100003824, symSize: 0x4C }
+  - { offset: 0x2885, size: 0x8, addend: 0x0, symName: _check_state, symObjAddr: 0x98, symBinAddr: 0x100003870, symSize: 0x4C }
+  - { offset: 0x28BB, size: 0x8, addend: 0x0, symName: _initialise_graphics, symObjAddr: 0xE4, symBinAddr: 0x1000038BC, symSize: 0x120 }
+  - { offset: 0x2933, size: 0x8, addend: 0x0, symName: _font_text_width, symObjAddr: 0x204, symBinAddr: 0x1000039DC, symSize: 0xE8 }
+  - { offset: 0x2993, size: 0x8, addend: 0x0, symName: _exit_SDL, symObjAddr: 0x2EC, symBinAddr: 0x100003AC4, symSize: 0x16C }
+...

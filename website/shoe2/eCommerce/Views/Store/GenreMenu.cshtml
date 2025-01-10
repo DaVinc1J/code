@@ -1,0 +1,19 @@
+﻿@model IEnumerable<eCommerce.Models.Genre>
+
+<ul id="categories">
+    @foreach (var genre in Model)
+    {
+       <li id="list_genre">
+           <a id="dropDown" href="@Url.Action("Browse", "Store", new { Genre = genre.Name })">@genre.Name</a>
+      </li>
+    }
+</ul>
+
+<style type="text/css">
+    #categories{ border-right: solid 1px #4b4242;padding-right: 21%; list-style-type:none;padding-left:12%;}
+    #list_genre{padding-bottom: 19px;}
+    #list_genre a {font-family: Georgia, Times, "Times New Roman", serif; color: black;
+    font-size: larger;text-transform: uppercase; font-style: oblique; font-weight: bolder;text-decoration: none;
+    padding-right: 15%;}
+    #list_genre a:hover{font-style:normal}
+</style>

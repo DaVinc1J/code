@@ -1,0 +1,75 @@
+﻿@model IEnumerable<eCommerce.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<p id="create">
+    @Html.ActionLink("Add Product", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+             Brand
+        </th>
+        <th>
+             Genre
+        </th>
+        <th>
+            Title
+        </th>
+        <th>
+            Price
+        </th>
+   </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Brand.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Genre.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ProductId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ProductId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ProductId })
+        </td>
+    </tr>
+}
+
+</table>
+
+<style type="text/css">
+    #create a{    font-size: large;
+    font-family: sans-serif;
+    padding-left: 8%;}
+    table {
+color: #333; /* Lighten up font color */
+font-family: Helvetica, Arial, sans-serif; /* Nicer font */
+width: 78%;
+margin-left:8%;
+border-collapse:
+collapse; border-spacing: 0;
+margin-bottom: 5%;
+}
+
+td, th { border: 1px solid #CCC; height: 30px; } /* Make cells a bit taller */
+
+th {
+background: #808080; /* Light grey background */
+font-weight: bold; /* Make sure they're bold */
+}
+
+td {
+background: #FAFAFA; /* Lighter grey background */
+text-align: center; /* Center our text */
+}
+</style>

@@ -1,0 +1,29 @@
+**notes**
+
+court** --------------------------------------------------------------------------------
+court dimensions gotten from dimensions.com, 
+gives the dimensions of 18m height and 9m width, 
+centred on the origin thats gives the four points to form a plane
+
+net** ----------------------------------------------------------------------------------
+similarly net is gotten from the same website,
+gives the dimensions of 9m wide and 1m tall,
+with a base starting height of 1.42m
+
+serve** --------------------------------------------------------------------------------
+initial heights of serves are calculated using me!
+height of 188cm, reach of heightx1.33 = ~2.43
+average jump height = 50-76cm 
+waist height = ~0.5 * height = ~100cm 
+
+standing serve = 243cm 
+jump serve = 290cm 
+underarm serve = 100cm 
+
+ball** ---------------------------------------------------------------------------------
+diameter of 21cm 
+therefore radius of ~11 (to be safe)
+serve should be at least 2.6m to clear the net safely
+
+calculations part** --------------------------------------------------------------------
+

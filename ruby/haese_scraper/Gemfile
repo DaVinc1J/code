@@ -1,0 +1,7 @@
+source 'https://rubygems.org'
+
+gem 'combine_pdf'
+gem 'nokogiri'
+gem 'racc'
+gem 'selenium-webdriver'
+gem 'webdrivers'

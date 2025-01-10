@@ -1,0 +1,1395 @@
+\documentclass{article}
+
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage[a4paper, left=1cm, right=1cm, top=2cm, bottom=2cm]{geometry}
+\usepgfplotslibrary{fillbetween, patchplots}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{calc,3dtools,angles,quotes}
+\usepackage{lipsum}
+\usepackage{appendix}
+\usepackage{cite}
+\usepackage{amssymb}
+\usepackage{siunitx}
+\usepackage{float}
+
+\pgfplotsset{compat=1.8}
+
+\captionsetup{font=it}
+
+\title{Applications of Vector Calculus}
+\author{Tristan Lowe}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introduction}
+
+The purpose of this investigation is to design a game that involves moving objects in a three-dimensional space. The game used in this investigation will be volleyball, where serving and spiking will be analysed. These two actions are chosen as it allows expansion from still objects to multiple moving objects, therefore increasing the depth and complexity of the investigation while allowing a simple starting point. The dimensions of the court, ball and net will all be fit to the Open Men's FIVB standards. \LaTeX\ will be used for visualising the court and interactions between bodies. The final goal of this investigation will be to simulate a volleyball training game where the players have to serve their balls and make them hit directly above the net, hopefully this investigation aims to find what period of time these balls will still collide given some deviation by the servers.
+
+\section*{Part A}
+
+There will be two planes used in this game, one plane for the court and one for the net. If a ball, which will be represented by a line, collides with either the court or the net, it will count as a point for the other team and is to be avoided. To start there will be three different serves analysed and represented as lines, a jump serve, a standing serve and an underarm serve. Figure 1 illustrates these serves \(\mathbf{S}_1\), \(\mathbf{S}_2\) and \(\mathbf{S}_3\) respectively and the rest of the court. Tables 1, 2 and 3 below show the positions of the coplanar points for the court and net as \(\mathbf{C}_\mathbf{n}\) and \(\mathbf{N}_\mathbf{n}\) respectively.
+
+\vspace{20pt}
+
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[
+			view={60}{15},
+			axis lines=center,
+			xlabel=$x$, ylabel=$y$, zlabel=$z$,
+			axis on top,
+			axis equal image,
+			grid=major,
+			enlargelimits=false,
+			zmin = 0, zmax = 3.2,
+			xmin = -6, xmax = 6,
+			ymin = -10, ymax = 10,
+			plot box ratio={1 1 1},
+			xtick={-5, 5},
+			ytick={-10, 10},
+			ztick={-10,-10},
+			scale = 3.25,
+			axis line style = {
+				opacity=0.5,
+				dash pattern = on 8pt off 8pt,
+			},
+			shader=flat,
+			]
+
+			% court rectangle
+			\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+				(4.5, 9, 0)
+				(-4.5, 9, 0)
+				(4.5, -9, 0)
+				(-4.5, -9, 0)
+			};
+
+			% net rectangle
+			\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+				(4.5, 0, 1.42)
+				(-4.5, 0, 1.42)
+				(4.5, 0, 2.43)
+				(-4.5, 0, 2.43)
+			};
+
+			% serve points
+			\addplot3[only marks] coordinates {
+				(-2.25, -9, 3.2)
+				(0, -9, 2.43)
+				(2.25, -9, 1)
+			};
+
+			\node at (axis cs:-2.25,-9,3.2) [anchor=east] {$S_1$};
+			\node at (axis cs:0,-9,2.43) [anchor=east] {$S_2$};
+			\node at (axis cs:2.25,-9,1) [anchor=east] {$S_3$};
+
+
+			\node at (axis cs: 4.5, 9, 0) [anchor=west] {$C_1$};
+			\node at (axis cs: 4.5, -9.25, 0) [anchor=east] {$C_2$};
+			\node at (axis cs: -4.5, 9.25, 0) [anchor=west] {$C_3$};
+			\node at (axis cs: -4.5, -9, 0) [anchor=east] {$C_4$};
+
+			\node at (axis cs: 4.5, 0, 1.42) [anchor=west] {$N_1$};
+			\node at (axis cs: -4.5, 0, 1.42) [anchor=east] {$N_2$};
+			\node at (axis cs: 4.5, 0, 2.43) [anchor=west] {$N_3$};
+			\node at (axis cs: -4.5, 0, 2.43) [anchor=east] {$N_4$};
+
+			% serve markers
+			\addplot3[->, dashed] coordinates {
+				(-2.25, -9, 0) 
+				(-2.25, -9, 3.2)
+			};
+			\addplot3[->, dashed] coordinates {
+				(0, -9, 0) 
+				(0, -9, 2.43)
+			};
+			\addplot3[->, dashed] coordinates {
+				(2.25, -9, 0) 
+				(2.25, -9, 1)
+			};
+
+			% serve lines
+			\addplot3[->, thick, mark options={fill=white, scale=0.5}] coordinates {
+				(-2.25, -9, 3.2) 
+				(-2.25, 0, 2.6)
+			};
+
+			\addplot3[->, thick, mark options={fill=white, scale=0.5}] coordinates {
+				(0, -9, 2.43) 
+				(0, 0, 2.6)
+			};
+
+			\addplot3[->, thick, mark options={fill=white, scale=0.5}] coordinates {
+				(2.25, -9, 1) 
+				(2.25, 0, 2.6)
+			};
+
+		\end{axis}
+
+	\end{tikzpicture}
+	\caption{Visualisation of the court with the paths followed by the three serves}
+
+\end{figure}
+
+\vspace{20pt}
+
+
+\begin{table}[h!]
+	\centering
+
+	\begin{minipage}{0.3\textwidth}
+		\centering
+		\begin{tabular}{|c|c|}
+			\hline
+			Point & Coordinates \\
+			\hline
+			\(C_1\) & (4.5, 9, 0) \\
+			\(C_2\) & (4.5, -9, 0) \\
+			\(C_3\) & (-4.5, 9, 0) \\
+			\(C_4\) & (-4.5, -9, 0) \\
+			\hline
+		\end{tabular}
+		\caption{Points that form the court plane}
+	\end{minipage}\hfill
+	\begin{minipage}{0.3\textwidth}
+		\centering
+		\begin{tabular}{|c|c|}
+			\hline
+			Point & Coordinates \\
+			\hline
+			\(N_1\) & (4.5, 0, 1.42) \\
+			\(N_2\) & (-4.5, 0, 1.42) \\
+			\(N_3\) & (4.5, 0, 2.43) \\
+			\(N_4\) & (-4.5, 0, 2.43) \\
+			\hline
+		\end{tabular}
+		\caption{Points that form the net plane}
+	\end{minipage}\hfill
+	\begin{minipage}{0.3\textwidth}
+		\centering
+		\begin{tabular}{|c|c|}
+			\hline
+			Point & Coordinates \\
+			\hline
+			\(S_1\) & (-2.25, -9, 3.2) \\
+			\(S_2\) & (0, -9, 2.43) \\
+			\(S_3\) & (2.25, -9, 1) \\
+			\hline
+		\end{tabular}
+		\caption{Location of all serves}
+	\end{minipage}
+\end{table}
+
+\section*{Definitions}
+
+Before starting the analysis section of this investigation it is important to first define the lines and planes using these points. This will be a simpler process as at this point as there are no slanted planes and all the lines don't move along the \(\mathrm{x}\)-axis, have a constant \(\mathrm{y}\)-axis and \(\mathrm{z}\)-axis movements.
+
+\subsection*{Planes}
+
+\subsection*{Court}
+
+To find the plane of the court, the points \(C_1 = (4.5, 9, 0)\), \(C_2 = (-4.5, 9, 0)\), \(C_3 = (4.5, -9, 0)\), and \(C_4 = (-4.5, -9, 0)\) will be used. \vspace{15pt}
+
+Find two vectors that lie along the plane, for simplicity these will be the width and height vectors that represent the court:
+\[\mathbf{v}_1 = C_2 - C_1 = [-4.5 - 4.5, 9 - 9, 0 - 0] = [-9, 0, 0]\]
+\[\mathbf{v}_2 = C_3 - C_1 = [4.5 - 4.5, -9 - 9, 0 - 0] = [0, -18, 0]\]
+\vspace{15pt}
+
+The normal vector \(\mathbf{n}\) can then be found by using the cross product between the two vectors:
+\[\mathbf{n} = \mathbf{v}_1 \times \mathbf{v}_2 = 
+	\begin{vmatrix}\mathbf{i} & \mathbf{j} & \mathbf{k} \\ -9 & 0 & 0 \\ 0 & -18 & 0 \end{vmatrix} = (0, 0, 162)\]
+	\\ 
+	The Cartesian Equation for the court can then be found using the normal to the plane, \(\mathbf{n} = (A, B, C)\) and a point in the plane, \(C_1\), using the formula \(A(x-a) + B(y-b) + C(z-c) = 0\):
+	\[0 \cdot (x - 4.5) + 0 \cdot (y - 9) + 162 \cdot (z - 0) = 0\]
+
+	Simplified to:
+	\[z = 0\]
+	This is as expected, as Figure 1 shows the centre of the court being centred at the origin, the net will then run along the \(z\)-axis \vspace{15pt}
+
+	In parametric form: \vspace{15pt}
+	\[\mathbf{r}_{\text{court}} = \begin{pmatrix} 4.5 \\ 9 \\ 0 \end{pmatrix} + \lambda \begin{pmatrix} -9 \\ 0 \\ 0 \end{pmatrix} + \mu \begin{pmatrix} 0 \\ -18 \\ 0 \end{pmatrix} \]
+	The parametric forms allows any point on the court to be represented by two variables $\lambda$ and $\mu$ with bounds \(0 \le \mu \le 1\) and \(0 \le \lambda \le 1\). However, for planes like the \(\mathrm{x}\mathrm{y}\)-plane, the benefit of a parametric form in calculations is degraded as the \(\mathrm{z}\)-axis can be ignored as \(z = 0\), therefore there will only be two variables anyway. However, parametrics are useful for understanding the bounds of the court which cartesians can't do as easily.
+	\subsection*{Net}
+
+	To find the plane of the net, the same process will be used, resulting in a plane of: \vspace{15pt}
+	\[y = 0\] \vspace{15pt}
+	A similar plane to the net, except that court will be the \(y\)-axis as displacement on that axis for the placement of the court.\vspace{15pt}
+
+	In parametric form: 
+	\[\mathbf{r}_{\text{net}} = begin
+		\begin{pmatrix} 4.5 \\ 0 \\ 1.42 \end{pmatrix} + 
+		\lambda \begin{pmatrix} -9 \\ 0 \\ 0 \end{pmatrix} + 
+		\mu \begin{pmatrix} 0 \\ 0 \\ 1.01 \end{pmatrix}\]
+
+		\subsubsection*{Lines}
+
+		\subsubsection*{Jump Serve}
+
+		The jump serve starts at the point \(S_1 = (-2.25, -9, 3.2)\), and ends at just above the net at \((-2.25, 0, 2.6)\) as this is the point at which the ball will be directly above the net, and therefore the ideal point in the game for the two balls to collide with each other. This ending point was also chosen for the game as this is the point at which the balls becomes clearly visible to the players on the other side of the net and so a recorder will be able to stand on the referee platform to see if they hit. Therefore it is important to know the velocity and direction the ball is travelling at when it passes over the net to calculate the point at which it lands, and reaction timing.
+		\vspace{15pt}
+
+		Direction vector of the jump serve:
+		\[
+			\mathbf{d} = (-2.25 - (-2.25), 0 - (-9), 2.6 - 3.2) = (0, 9, -0.6)
+		\]
+
+		Line Equation:
+		\[\vec{r}_1(t) = 
+			\begin{pmatrix} -2.25 \\ -9 \\ 3.2 \end{pmatrix} 
+			+ t \begin{pmatrix} 0 \\ 9 \\ -0.6 \end{pmatrix}\]
+
+
+			\subsubsection*{Standing Serve}
+
+			From \(S_2 = (0, -9, 2.43)\) to the net at \((0, 0, 2.6)\):\vspace{15pt}
+
+			Line Equation:
+			\[\vec{r}_2(t) = 
+				\begin{pmatrix} 0 \\ -9 \\ 2.43 \end{pmatrix} 
+				+ t \begin{pmatrix} 0 \\ 9 \\ 0.17 \end{pmatrix}\]
+
+				\subsubsection*{Underarm Serve}
+
+				And for \(S_3 = (2.25, -9, 1)\) to the net at \((2.25, 0, 2.6)\):
+				\vspace{30pt}
+				Line Equation:
+				\[\vec{r}_3(t) = 
+					\begin{pmatrix} 2.25 \\ -9 \\ 1 \end{pmatrix} 
+					+ t \begin{pmatrix} 0 \\ 9 \\ 1.6 \end{pmatrix}\]
+
+
+					\subsection*{Speed}
+
+					The current lines assume that \( 0 \le t \le 1 \), this would mean that the serve would take a full second to reach the middle of the net. Given that the distance between the point it is served at and the middle of the net is given by:
+					\[\sqrt{(-2.25+2.25)^{2}+(0+9)^{2}+(2.6-3.2)^{2}} = 9.02\text{ms}^{-1}\]
+					This would mean that the ball would have to be travelling at \( \approx 9 \text{ms}^{-1}\). Therefore, in this expression both the time and therefore speed are unknown, data on one of these must be found to substitute into the equations. The following process equates the modulus of the vector \(\vec{r}\) to the values found for the average speed of volleyball serves by using a scalar unknown \(\mathrm{k}\) to adjust the direction vector as needed. The velocity averages used are (in ms\(^{-1}\)), jump serve = \(24.42\), standing serve = \(13.86\) and underarm serve = \(9.2\), these values are from a study by Palao and Valades on peak-performance volleyball players in training and analysed upwards of 2000 serves~\cite{servespeed}.
+
+					\subsubsection*{Jump Serve}
+
+					\[\therefore \vec{r}_1(t) = 
+						\begin{pmatrix} -2.25 \\ -9 \\ 3.2 \end{pmatrix} 
+						+ tk \begin{pmatrix} 0 \\ 9 \\ -0.6 \end{pmatrix}, k \in \mathbb{R}\]
+
+						\[\therefore \vec{r}_1(1) = 
+							\begin{pmatrix} -2.25 \\ -9 \\ 3.2 \end{pmatrix} 
+							+ k \begin{pmatrix} 0 \\ 9 \\ -0.6 \end{pmatrix}, k \in \mathbb{R}\]
+
+							\[\lvert \vec{r}_{1}(1) \rvert = \mathbf{v}\]
+							\[\therefore \lvert \mathbf{r}_{1}(1) \rvert= 24.42\]
+							\[\sqrt{(9\mathbf{k})^{2} + (-0.6\mathbf{k})^{2}} = 24.42\]
+							\[\sqrt{81.36\mathbf{k}^{2}} = 24.42\]
+							\[81.36\mathbf{k}^{2} = 596.34\]
+							\[\mathbf{k}^{2} = 7.33\]
+							\[\mathbf{k} = \pm2.71\]
+							\[\mathbf{k} = 2.71, k \geq 0\]
+
+							\[\therefore \mathbf{r}_1(t) = 
+								\begin{pmatrix} -2.25 \\ -9 \\ 3.2 \end{pmatrix} 
+								+ t \begin{pmatrix} 0 \\ 24.37 \\ -1.62 \end{pmatrix}\]
+								The net is located at \(y = 0\):
+								\[y(t) = -9 + 24.37\mathbf{t} = 0\]
+								\[t = \frac{9}{24.37} \approx 0.37\]
+
+
+								\subsubsection*{Standing Serve}
+
+								\[\mathbf{r}_2(t) = 
+									\begin{pmatrix} 0 \\ -9 \\ 2.43 \end{pmatrix} 
+									+ tk \begin{pmatrix} 0 \\ 9 \\ 0.17 \end{pmatrix}\]
+									\[k = 1.54\]
+									\[\therefore \mathbf{r}_2(t) = 
+										\begin{pmatrix} 0 \\ -9 \\ 2.43 \end{pmatrix} 
+										+ t \begin{pmatrix} 0 \\ 13.86 \\ 0.26 \end{pmatrix}\]
+										\[t \approx 0.65\]
+
+
+										\subsubsection*{Underarm Serve}
+
+										\[\mathbf{r}_3(t) = 
+											\begin{pmatrix} 2.25 \\ -9 \\ 1 \end{pmatrix} 
+											+ tk \begin{pmatrix} 0 \\ 9 \\ 1.6 \end{pmatrix}\]
+											\[k = 1.01\]
+											\[\therefore \mathbf{r}_2(t) = 
+												\begin{pmatrix} 2.25 \\ -9 \\ 1 \end{pmatrix} 
+												+ t \begin{pmatrix} 0 \\ 9.09 \\ 1.62 \end{pmatrix}\]
+												\[t \approx 0.99\]
+												The \(t\) values for each of these serves now represents the bounds of the line, i.e., \(0 \le t \le 0.37\) for the jump serve with values of t in between these values representing points that the ball goes through on its path to the net. I believe these values to be realistic and represent the different serves types, as serves like a jump serve will be faster and take less time to reach the next compared to the underarm serve due to the parts of the hand that are used to hit each one.
+
+
+												\subsection*{Angle}
+
+												Finding the angle in which the line is pointing from the horizontal will be extremely important when attempting to convert the lines over to parametric curves, as the curve will need to account for gravity while maintaining the current velocity. This can be done by finding the current angle and adjusting the angle based on the change in the \(y\)-axis. To find the angle between the serve and the horizontal, the angle between two lines formula can be used:
+												\[\cos \theta = \frac{\vec{a} \cdot \vec{b}}{|\vec{ab}|}\]
+												Where \(\vec{a}\) is the direction vector for the line, and \(\vec{b}\) a horizontal direction vector, i.e., \(\vec{b} = \begin{pmatrix} 0 \\ 9 \\ 0 \end{pmatrix}\). These two vectors represent two sides of a triangle, and \(\theta\) the angle between them. Give \(\vec{b}\) is a vector along the \(\mathrm{y}\)-axis this represnts the radians below the horizon. \(\vec{b}\) could be \(\begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix}\) however this value is used for clarity in Fig. 2 when drawing the triangle the two vectors make.
+
+												\subsubsection*{Jump Serve}
+
+												\[\theta = \cos^{-1} \frac{\begin{pmatrix} 0 \\ 9 \\ -0.6 \end{pmatrix} \cdot \begin{pmatrix} 0 \\ 9 \\ 0 \end{pmatrix}}{ \left| \begin{pmatrix} 0 \\ 9 \\ -0.6 \end{pmatrix} \right| \left| \begin{pmatrix} 0 \\ 9 \\ 0 \end{pmatrix} \right| }\]
+												\[\theta = \cos^{-1} \frac{81}{\sqrt{6590.16}}\]
+												\[\theta = \SI{-3.814}{\degree} = \SI{-0.067}{\radian}\]
+
+
+												\begin{figure}[htbp]
+													\centering
+													\begin{tikzpicture}
+														\begin{axis}[
+															view={75}{10},
+															axis lines=center,
+															xlabel=$x$, ylabel=$y$, zlabel=$z$,
+															axis on top,
+															axis equal image,
+															grid=major,
+															hide x axis,
+															hide y axis,
+															hide z axis,
+															enlargelimits=false,
+															zmin = 0, zmax = 3.2,
+															xmin = -6, xmax = 6,
+															ymin = -10, ymax = 10,
+															plot box ratio={1 1 1},
+															xtick={6, 6},
+															ytick={-12, 12},
+															ztick={-12,-12},
+															scale = 3.25,
+															axis line style = {
+																opacity=0.5,
+																dash pattern = on 8pt off 8pt,
+															},
+															shader=flat,
+															]
+
+															% court rectangle
+															\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+																(4.5, 9, 0)
+																(-4.5, 9, 0)
+																(4.5, -9, 0)
+																(-4.5, -9, 0)
+															};
+
+															% net rectangle
+															\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+																(4.5, 0, 1.42)
+																(-4.5, 0, 1.42)
+																(4.5, 0, 2.43)
+																(-4.5, 0, 2.43)
+															};
+
+															\node at (axis cs: 0, 0.25, 2.6) [anchor=west] {\(\vec{a}\)};
+															\node at (axis cs: 0, 0.25, 3.2) [anchor=west] {\(\vec{b}\)};
+															\node at (axis cs: 0, -4.5, 3.5) [anchor = west] {\(\theta = 0.067\text{ rad}\)};
+
+															% serve markers
+															\addplot3[->, dashed] coordinates {
+																(0, 0, 3.2) 
+																(0, 0, 2.6)
+															};
+
+															% serve lines
+															\addplot3[->, thick, mark options={fill=white, scale=0.5}] coordinates {
+																(0, -9, 3.2) 
+																(0, 0, 2.6)
+															};
+
+															\addplot3[->, thick, mark options={fill=white, scale=0.5}] coordinates {
+																(0, -9, 3.2)
+																(0, 0, 3.2)
+															};
+
+														\end{axis}
+
+													\end{tikzpicture}
+													\caption{Visualisation of the triangle from \(\vec{a}\) and \(\vec{b}\) for the jump serve}
+
+												\end{figure}
+
+												\subsubsection*{Standing Serve}
+
+												\[\theta = \SI{1.082}{\degree} = \SI{0.0189}{\radian}\]
+
+												\begin{figure}[htbp]
+													\centering
+													\begin{tikzpicture}
+														\begin{axis}[
+															view={75}{10},
+															axis lines=center,
+															xlabel=$x$, ylabel=$y$, zlabel=$z$,
+															axis on top,
+															axis equal image,
+															grid=major,
+															hide x axis,
+															hide y axis,
+															hide z axis,
+															enlargelimits=false,
+															zmin = 0, zmax = 3.2,
+															xmin = -6, xmax = 6,
+															ymin = -10, ymax = 10,
+															plot box ratio={1 1 1},
+															xtick={6, 6},
+															ytick={-12, 12},
+															ztick={-12,-12},
+															scale = 3.25,
+															axis line style = {
+																opacity=0.5,
+																dash pattern = on 8pt off 8pt,
+															},
+															shader=flat,
+															]
+
+															% court rectangle
+															\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+																(4.5, 9, 0)
+																(-4.5, 9, 0)
+																(4.5, -9, 0)
+																(-4.5, -9, 0)
+															};
+
+															% net rectangle
+															\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+																(4.5, 0, 1.42)
+																(-4.5, 0, 1.42)
+																(4.5, 0, 2.43)
+																(-4.5, 0, 2.43)
+															};
+
+															\node at (axis cs: 0, 0.25, 2.43) [anchor=west] {\(\vec{a}\)};
+															\node at (axis cs: 0, 0.25, 2.8) [anchor=west] {\(\vec{b}\)};
+															\node at (axis cs: 0, -4.5, 2.9) [anchor = west] {\(\theta = 0.0189 \text{ rad}\)};
+
+															% serve markers
+															\addplot3[->, dashed] coordinates {
+																(0, 0, 2.43) 
+																(0, 0, 2.6)
+															};
+
+															% serve lines
+															\addplot3[->, thick, mark options={fill=white, scale=0.5}] coordinates {
+																(0, -9, 2.43) 
+																(0, 0, 2.6)
+															};
+
+															\addplot3[->, thick, mark options={fill=white, scale=0.5}] coordinates {
+																(0, -9, 2.43)
+																(0, 0, 2.43)
+															};
+
+														\end{axis}
+
+													\end{tikzpicture}
+													\caption{Visualisation of the triangle from \(\vec{a}\) and \(\vec{b}\) for the standing serve}
+
+												\end{figure}
+
+												\subsubsection*{Underarm Serve}
+
+												\[\theta = \SI{10.08}{\degree} = \SI{0.176}{\radian}\]
+
+												\begin{figure}[htbp]
+													\centering
+													\begin{tikzpicture}
+														\begin{axis}[
+															view={75}{10},
+															axis lines=center,
+															xlabel=$x$, ylabel=$y$, zlabel=$z$,
+															axis on top,
+															axis equal image,
+															grid=major,
+															hide x axis,
+															hide y axis,
+															hide z axis,
+															enlargelimits=false,
+															zmin = 0, zmax = 3.2,
+															xmin = -6, xmax = 6,
+															ymin = -10, ymax = 10,
+															plot box ratio={1 1 1},
+															xtick={6, 6},
+															ytick={-12, 12},
+															ztick={-12,-12},
+															scale = 3.25,
+															axis line style = {
+																opacity=0.5,
+																dash pattern = on 8pt off 8pt,
+															},
+															shader=flat,
+															]
+
+															% court rectangle
+															\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+																(4.5, 9, 0)
+																(-4.5, 9, 0)
+																(4.5, -9, 0)
+																(-4.5, -9, 0)
+															};
+
+															% net rectangle
+															\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+																(4.5, 0, 1.42)
+																(-4.5, 0, 1.42)
+																(4.5, 0, 2.43)
+																(-4.5, 0, 2.43)
+															};
+
+															\node at (axis cs: 0, 0.25, 2.6) [anchor=west] {\(\vec{a}\)};
+															\node at (axis cs: 0, 0.25, 1) [anchor=west] {\(\vec{b}\)};
+															\node at (axis cs: 0, -4.5, 2.9) [anchor = west] {\(\theta = 0.176 \text{ rad}\)};
+
+															% serve markers
+															\addplot3[->, dashed] coordinates {
+																(0, 0, 1.0) 
+																(0, 0, 2.6)
+															};
+
+															% serve lines
+															\addplot3[->, thick, mark options={fill=white, scale=0.5}] coordinates {
+																(0, -9, 1.0) 
+																(0, 0, 2.6)
+															};
+
+															\addplot3[->, thick, mark options={fill=white, scale=0.5}] coordinates {
+																(0, -9, 1.0)
+																(0, 0, 1.0)
+															};
+
+														\end{axis}
+
+													\end{tikzpicture}
+													\caption{Visualisation of the triangle from \(\vec{a}\) and \(\vec{b}\) for the underarm serve}
+
+												\end{figure}
+
+												For all three calculations, the original direction vectors from before the Speed section were used, this is only for simplicity when calculating the dot product and modulus and has no effect on the angle due to it just being a scaled version. Since the jump serves angle is negative it means that serve is \(\SI{3.814}{\degree}\) below the horizontal, while the other two serves will be above the horizontal, however this is already clearly shown from the \(z\) aspect of each direction vector.
+
+
+
+												\section*{Parametric Curves}
+												However, linear lines are not realistic as in real games, gravity will pull the ball downwards by \(9.81\)ms\(^{-2}\) creating a parabolic curve rather than a straight line. Converting these lines over to parametric curves requires using three equations of motion for each axis. The general form of a parametric curve is given by \(x(t) = x_{0}+v_{x}t+a_{x}t^{2}\), and so on for all three axis. Seeing as the only acceleration that will be accounted for in this investigation will be that of gravity \(a_{x} \text{ and } a_{y}\) will be \(0\) and so ignored in the calculations. This parametric curve is used to represent the movement of an object in 3D space and will be used to more accurately plot the serves.
+
+												\subsection*{Creating the parametric curves}
+
+												\[x(t) = x_{0} + v_{x}t\]
+												\[y(t) = y_{0} + v_{y}t\]
+												\[z(t) = z_{0} + v_{z}t + \frac{1}{2}a_{z}t^{2}\]
+												Where \(x_{0}/y_{0}/z_{0}\) are the starting positions for each line and \(v_{x}/v_{y}/v_{z}\) are the direction vector values for each line. \(a_{z}\) is the acceleration in the \(z\)-axis, which stated again is \(g = -9.8\)ms\(^{-2}\) due to gravity. 
+												\subsubsection*{Jump Serve}
+												Given the adjusted line for the jump serve: 
+												\[\mathbf{r}_1(t) = 
+													\begin{pmatrix} -2.25 \\ -9 \\ 3.2 \end{pmatrix} 
+													+ t \begin{pmatrix} 0 \\ 24.37 \\ -1.62 \end{pmatrix}\] 
+													The resulting parametric curve can be given by:
+													\[ x(t) = x_{0} = -2.25 \]
+													\[ y(t) = y_{0} + v_{y}t = -9 + 24.37t \]
+													\[ z(t) = z_{0} + v_{z}t - \frac{1}{2}gt^{2} = 3.2 - 1.62t -4.9t^{2} \]
+													\[0 \le t \le 0.37\]
+
+													\subsubsection*{Standing Serve}
+													\[ x(t) = 0 \]
+													\[ y(t) = -9 + 13.86t\]
+													\[ z(t) = 2.43 + 0.26t -4.9t^{2}\]
+													\[0 \le t \le 0.65\]
+
+													\subsubsection*{Underarm Serve}
+													\[ x(t) = 2.25 \]
+													\[ y(t) = -9 + 9.09t \]
+													\[ z(t) = 1 + 1.62t - 4.9t^{2}\]
+													\[0 \le t \le 0.99\]
+
+													The resulting curves are 
+
+													\subsection*{Intersection with Net or Court}
+
+													\subsubsection*{Jump Serve}
+													To find when the jump serve intersect with the net/\(z\)-axis, we must find when \(y(t) = 0\) as \(x(t)\) is constant. 
+													\[y(t) = -9 + 24.37t = 0\]
+													\[t = 0.369\]
+													Subsituting this \(t\) value into the equation for the jump serve, it is found that at \((-2.25, 0, 1.93)\) the jump serve will collide with the net, \(\approx 0.67\)m lower than the serve without gravity applied to it. 
+
+													\subsubsection*{Standing Serve}
+													The same process is applied to the standing serve, giving the time as:
+													\[t = 0.649\]
+													And an intersection point with the \(z\)-axis at \((0, 0, 0.53)\), however it does not intersect with the net plane as it is too low and will pass underneath the net which has bounds of \(1.42 \le z \le 2.43\).
+
+													\subsubsection*{Underarm Serve}
+													However with the underarm serve, if the same process is applied, giving a time of \(t = 0.99\) and then substituted into the parametric curve. The resulting position is at \((2.25, 0, -2.27)\), \(\approx 2\)m below the floor of the court. This shows that gravity had such an effect on the underarm serve that it not only misses the net but doesnt even reach the middle of the court. Finding the point when it touches the floor is the same process and gives a time of \(0.65\) and a intersection point to the court of \((2.25, -3.09, 0)\) \vspace{15pt}
+
+													\begin{figure}[H]
+														\centering
+														\begin{tikzpicture}
+															\begin{axis}[
+																view={90}{0},
+																axis lines=center,
+																xlabel=$x$, ylabel=$y$, zlabel=$z$,
+																hide x axis,
+																hide y axis,
+																hide z axis,
+																axis on top,
+																axis equal image,
+																grid=major,
+																enlargelimits=false,
+																zmin = 0, zmax = 3.2,
+																plot box ratio={1 1 1},
+																xtick={-10},
+																ytick={-10},
+																ztick={-10,-10},
+																scale = 3.25,
+																axis line style = {
+																	opacity=0.5,
+																	dash pattern = on 8pt off 8pt,
+																},
+																shader=flat,
+																]
+
+																% court rectangle
+																\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+																	(4.5, 9, 0)
+																	(-4.5, 9, 0)
+																	(4.5, -9, 0)
+																	(-4.5, -9, 0)
+																};
+
+																% net rectangle
+																\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+																	(4.5, 0, 1.42)
+																	(-4.5, 0, 1.42)
+																	(4.5, 0, 2.43)
+																	(-4.5, 0, 2.43)
+																};
+
+																\node at (axis cs:-2.25,-9,3.2) [anchor=east] {$S_1$};
+																\node at (axis cs:0,-9,2.43) [anchor=east] {$S_2$};
+																\node at (axis cs:2.25,-9,1) [anchor=east] {$S_3$};
+
+																% serve markers
+																\addplot3[->, dashed] coordinates {
+																	(-2.25, -9, 0) 
+																	(-2.25, -9, 3.2)
+																};
+																\addplot3[->, dashed] coordinates {
+																	(0, -9, 0) 
+																	(0, -9, 2.43)
+																};
+																\addplot3[->, dashed] coordinates {
+																	(2.25, -9, 0) 
+																	(2.25, -9, 1)
+																};
+
+																\draw[line width=100mm] (4.5,0,2.43) -- (4.5,0,1.42);
+
+																% serve lines
+																\addplot3[
+																domain=0:0.37,
+																samples=50,
+																samples y=0,
+																thick,
+																color=black,
+																]
+																(
+																{-2.25},
+																{-9 + 24.37 * x},
+																{3.2 - 1.62 * x - 4.9 * x^2}
+																);
+
+																\addplot3[
+																domain=0:0.65,
+																samples=50,
+																samples y=0,
+																thick,
+																color=black,
+																]
+																(
+																{0},
+																{-9 + 13.86 * x},
+																{2.43 + 0.26 * x - 4.9 * x^2}
+																);
+
+																\addplot3[
+																domain=0:0.65,
+																samples=50,
+																samples y=0,
+																thick,
+																color=black,
+																]
+																(
+																{2.25},
+																{-9 + 9.09 * x},
+																{1 + 1.62 * x - 4.9 * x^2}
+																);
+
+																\addplot3[only marks] coordinates {
+																	(-2.25, 0, 1.93)
+																};
+
+																\addplot3[only marks] coordinates {
+																	(0, 0, 0.53)
+																};
+
+																\addplot3[only marks] coordinates {
+																	(2.25, -3.09, 0)
+																};
+
+															\end{axis}
+														\end{tikzpicture}
+														\caption{Visualisation of the serves after gravity has been applied to them}
+													\end{figure}
+													Figure 2 shows a visualisation of the new curves, and the effect of gravity is evident, along with the clear effect that the angle that the ball is being served at has on the curve. There is not enough \(z\) momentum to overcome gravity. By deriving the \(z(t)\) function for each serve and solving for \(0\), the maximum height and time taken to reach it can be found. This will show how inefficient the angling of the serves really is. 
+
+													\subsubsection*{Jump Serve}
+													\[z'(t) = -1.62 - 9.8t = 0\]
+													\[t = -0.165\]
+													Since \(t\) is outside of the bounds, it shows that the maximum height was at the beginning of the serve at \(z(0) = 3.2\).
+													\subsubsection*{Standing Serve}
+													\[z'(t) = 0.26 - 9.8t = 0\]
+													\[t = 0.027\]
+													\[z(0.027) = 2.433\]
+													\subsubsection*{Underarm Serve}
+													\[z'(t) = 1.62 - 9.8t = 0\]
+													\[t = 0.165\]
+													\[z(0.165) = 1.13\]
+													This shows the inefficiency of these serves, with the case of the standing serve, within 30 milliseconds of serving the volleyball had already lost all upwards momentum and was accelerating downwards.
+
+													\section*{Adjusting Parametric Curves}
+													Adjusting the serves will require adding a linear factor the existing \(z(t)\) so that it will be able to clear the court. While this may increase the speed of the volleyballs it will also be a whole lot less complex that attempting to rotate the parametric curves by \(\theta\): 
+													\[
+														x \xrightarrow{\phantom{---}} x \cos(\theta) - y \sin(\theta)
+													\]
+													\[
+														y \xrightarrow{\phantom{---}} x \sin(\theta) + y \cos(\theta)
+													\]
+													\subsubsection*{Jump Serve}
+													For the jump serve formula it can be adjusted by adding a linear factor of \(\mathrm{t}\), \(\mathrm{k}\) and finding when this new \(z(t)\) function reaches the ideal position above the net, \(2.6\)m:
+													\[z(t) = 3.2 - 1.62t - 4.9t^{2} + kt\]
+													\[2.6 = 3.2 - 1.62(0.37) - 4.9(0.37)^{2} + 0.37k\]
+													\[2.6 = 1.97 + 0.37k\]
+													\[k = 1.803\]
+													\[z(t) = 3.2 + 0.18t - 4.9t^{2}\]
+
+
+													\subsubsection*{Standing Serve}
+													\[k = 3.19\]
+													\[z(t) = 2.43 + 3.45t - 4.9t^{2}\]
+
+
+													\subsubsection*{Underarm Serve}
+													\[k = 4.85\]
+													\[z(t) = 1 + 6.47t - 4.9t^{2}\]
+
+													\begin{figure}[H]
+														\centering
+														\begin{tikzpicture}
+															\begin{axis}[
+																view={90}{0},
+																axis lines=center,
+																xlabel=$x$, ylabel=$y$, zlabel=$z$,
+																axis on top,
+																hide x axis,
+																hide y axis,
+																hide z axis,
+																axis equal image,
+																grid=major,
+																enlargelimits=false,
+																zmin = 0, zmax = 3.2,
+																plot box ratio={1 1 1},
+																xtick={-10},
+																ytick={-10},
+																ztick={-10,-10},
+																scale = 3.25,
+																axis line style = {
+																	opacity=0.5,
+																	dash pattern = on 8pt off 8pt,
+																},
+																shader=flat,
+																]
+
+																% court rectangle
+																\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+																	(4.5, 9, 0)
+																	(-4.5, 9, 0)
+																	(4.5, -9, 0)
+																	(-4.5, -9, 0)
+																};
+
+																% net rectangle
+																\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+																	(4.5, 0, 1.42)
+																	(-4.5, 0, 1.42)
+																	(4.5, 0, 2.43)
+																	(-4.5, 0, 2.43)
+																};
+
+																% serve points
+																\addplot3[only marks] coordinates {
+																	(-2.25, -9, 3.2)
+																	(0, -9, 2.43)
+																	(2.25, -9, 1)
+																};
+
+																\node at (axis cs:-2.25,-9,3.2) [anchor=east] {$S_1$};
+																\node at (axis cs:0,-9,2.43) [anchor=east] {$S_2$};
+																\node at (axis cs:2.25,-9,1) [anchor=east] {$S_3$};
+
+																% serve markers
+																\addplot3[->, dashed] coordinates {
+																	(-2.25, -9, 0) 
+																	(-2.25, -9, 3.2)
+																};
+																\addplot3[->, dashed] coordinates {
+																	(0, -9, 0) 
+																	(0, -9, 2.43)
+																};
+																\addplot3[->, dashed] coordinates {
+																	(2.25, -9, 0) 
+																	(2.25, -9, 1)
+																};
+
+																% serve lines
+																\addplot3[
+																domain=0:0.37,
+																samples=50,
+																samples y=0,
+																thick,
+																color=black,
+																]
+																(
+																{-2.25},
+																{-9 + 24.37 * x},
+																{3.2 + 0.18 * x - 4.9 * x^2}
+																);
+
+																\addplot3[
+																domain=0:0.65,
+																samples=50,
+																samples y=0,
+																thick,
+																color=black,
+																]
+																(
+																{0},
+																{-9 + 13.86 * x},
+																{2.43 + 3.45 * x - 4.9 * x^2}
+																);
+
+																\addplot3[
+																domain=0:0.99,
+																samples=50,
+																samples y=0,
+																thick,
+																color=black,
+																]
+																(
+																{2.25},
+																{-9 + 9.09 * x},
+																{1 + 6.47 * x - 4.9 * x^2}
+																);
+
+																\addplot3[only marks] coordinates {
+																	(-2.25, 0, 2.6)
+																};
+
+															\end{axis}
+														\end{tikzpicture}
+														\caption{Visualisation of the adjusted serves clearing the net}
+													\end{figure}
+
+
+													\section*{The Game Begins}
+													This final section of this investigation is to analyse the movement between two volleyballs. The game involves two players at either end of the court, both serving a ball. The aim is for both balls to collide at \(y=0\) above the net.
+
+													\begin{figure}[H]
+														\centering
+														\begin{tikzpicture}
+															\begin{axis}[
+																view={60}{30},
+																axis lines=center,
+																xlabel=$x$, ylabel=$y$, zlabel=$z$,
+																axis on top,
+																axis equal image,
+																grid=major,
+																enlargelimits=false,
+																zmin = 0, zmax = 3.2,
+																plot box ratio={1 1 1},
+																xtick={-10},
+																ytick={-10},
+																ztick={-10,-10},
+																scale = 3.25,
+																axis line style = {
+																	opacity=0.5,
+																	dash pattern = on 8pt off 8pt,
+																},
+																shader=flat,
+																]
+
+																% court rectangle
+																\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+																	(4.5, 9, 0)
+																	(-4.5, 9, 0)
+																	(4.5, -9, 0)
+																	(-4.5, -9, 0)
+																};
+
+																% net rectangle
+																\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+																	(4.5, 0, 1.42)
+																	(-4.5, 0, 1.42)
+																	(4.5, 0, 2.43)
+																	(-4.5, 0, 2.43)
+																};
+
+																% serve points
+																\addplot3[only marks] coordinates {
+																	(0, -9, 3.2)
+																	(0, 9, 1)
+																};
+
+																\node at (axis cs:0,-9,3.2) [anchor=east] {$S_1$};
+																\node at (axis cs:0,9,1) [anchor=west] {$S_3$};
+
+																% serve markers
+																\addplot3[->, dashed] coordinates {
+																	(0, -9, 0) 
+																	(0, -9, 3.2)
+																};
+																\addplot3[->, dashed] coordinates {
+																	(0, 9, 0) 
+																	(0, 9, 1)
+																};
+
+																% serve lines
+																\addplot3[
+																domain=0:0.37,
+																samples=50,
+																samples y=0,
+																thick,
+																color=black,
+																]
+																(
+																{0},
+																{-9 + 24.37 * x},
+																{3.2 + 0.18 * x - 4.9 * x^2}
+																);
+
+																\addplot3[
+																domain=0:0.99,
+																samples=50,
+																samples y=0,
+																thick,
+																color=black,
+																]
+																(
+																{0},
+																{9 - 9.09 * x},
+																{1 + 6.47 * x - 4.9 * x^2}
+																);
+
+																\addplot3[only marks] coordinates {
+																	(0, 0, 2.6)
+																};
+
+															\end{axis}
+														\end{tikzpicture}
+														\caption{Visualisation of the serves colliding at the net}
+														\label{fig:figure3}
+													\end{figure}
+
+													The the old equation for \(S_{3}\) was from the same side of the net as \(S_{1}\) it must be adjusted to come from the other direction:
+													\[x_{3}(t) = 0\]
+													\[y_{3}(t) = 9 - 9.09t\]
+													\[z_{3}(t) = 1 + 6.47t - 4.9t^{2}\]
+													Therefore, \(y(t)\) just gets multiplied by \(-1\) to revert the direction it travels in. The formula for \(S_{1}\) remains the same, except \(x_{1}(t) = 0\) so that they are on the same axis to simulate players aligning themselves when they play:
+													\[x_{1}(t) = 0\]
+													\[y_{1}(t) = -9 + 24.37t\]
+													\[z_{1}(t) = 3.2 - 1.62t - 4.9t^{2}\]
+													However these volleyballs travel at different speeds and so will reach the middle of the net at different times, this means that given the balls are served at the same time the balls will not collide. To confirm this the formula for the distance between the two curves can be used. 
+													\[d(t) = \sqrt{(x_{1}(t)-x_{2}(t))^{2}+(y_{1}(t)-y_{2}(t))^{2}+(z_{1}(t)-z_{2}(t))^{2}}\]
+													Since it was stated earlier that \(x_{3}(t) = 0\) and \(x_{1}(t) = 0\) the formula can be simplified further to:
+													\[d(t) = \sqrt{((y_{1}(t)-y_{2}(t))^{2}+(z_{1}(t)-z_{2}(t))^{2}}\]
+													By substituting in the respective values from the parametric curves used in this section the distance function simplifies down to:
+													\[d(t) = \sqrt{1159.14t^{2}-1232.24t+328.84}\]
+													Next to find when these balls are closest to one another in the range of \(0\le t \le 0.99\) as this is the time when the distance between the two balls is the largest. However, this range might include a period when the parametric curve drops below the court plane, so the time when its \(z(t)\) function is zero. 
+													\[z_{3}(0.99) = -1.42\]
+													\[z_{3}(t) = 1 + 6.47t - 4.9t^{2} = 0\]
+													\[\therefore t = 0.83\]
+													From this adjustment calculation the new period that will be analysed becomes \(0\le t \le 0.83\). To find the closest distance between the volleyballs, the time when the derivative of \(d(t) = 0\) must be found. 
+													\[d'(t) = \frac{2318.27t - 1232.24}{2\sqrt{1159.14t^{2} - 1232.24t + 328.84}}\]
+													\[\therefore 2318.27t - 1232.24 = 0 \therefore t = 0.53\]
+
+
+													\begin{figure}[H]
+														\centering
+														\begin{tikzpicture}
+															\begin{axis}[
+																view={60}{30},
+																axis lines=center,
+																xlabel=$x$, ylabel=$y$, zlabel=$z$,
+																axis on top,
+																axis equal image,
+																grid=major,
+																enlargelimits=false,
+																zmin = 0, zmax = 3.2,
+																plot box ratio={1 1 1},
+																xtick={-10},
+																ytick={-10},
+																ztick={-10,-10},
+																scale = 3.25,
+																axis line style = {
+																	opacity=0.5,
+																	dash pattern = on 8pt off 8pt,
+																},
+																shader=flat,
+																]
+
+																% court rectangle
+																\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+																	(4.5, 9, 0)
+																	(-4.5, 9, 0)
+																	(4.5, -9, 0)
+																	(-4.5, -9, 0)
+																};
+
+																% net rectangle
+																\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+																	(4.5, 0, 1.42)
+																	(-4.5, 0, 1.42)
+																	(4.5, 0, 2.43)
+																	(-4.5, 0, 2.43)
+																};
+
+																% serve points
+																\addplot3[only marks] coordinates {
+																	(0, -9, 3.2)
+																	(0, 9, 1)
+																};
+
+																\node at (axis cs:0,-9,3.2) [anchor=east] {$S_1$};
+																\node at (axis cs:0,9,1) [anchor=west] {$S_3$};
+
+																% serve markers
+																\addplot3[->, dashed] coordinates {
+																	(0, -9, 0) 
+																	(0, -9, 3.2)
+																};
+																\addplot3[->, dashed] coordinates {
+																	(0, 9, 0) 
+																	(0, 9, 1)
+																};
+
+																% serve lines
+																\addplot3[
+																domain=0:0.53,
+																samples=50,
+																samples y=0,
+																thick,
+																color=black,
+																]
+																(
+																{0},
+																{-9 + 24.37 * x},
+																{3.2 + 0.18 * x - 4.9 * x^2}
+																);
+
+																\addplot3[
+																domain=0:0.53,
+																samples=50,
+																samples y=0,
+																thick,
+																color=black,
+																]
+																(
+																{0},
+																{9 - 9.09 * x},
+																{1 + 6.47 * x - 4.9 * x^2}
+																);
+
+																\addplot3[only marks] coordinates {
+																	(0, 4.18, 3.05)
+																};
+
+																\addplot3[only marks] coordinates {
+																	(0, 3.92, 1.92)
+																};
+
+																\addplot3[->, dashed] coordinates {
+																	(0, 4.18, 3.05) 
+																	(0, 3.92, 1.92)
+																};
+
+															\end{axis}
+														\end{tikzpicture}
+														\caption{Visualisation of the path of the serves when served at the same time and at \(t = 0.53\), when they are at their closest}
+													\end{figure}
+
+													Figure 5 visually represents the situation in which the two balls are closest if they are served at the same time, with the distance between the two serves being only \(1.16\)m. This difference is mainly due to the different angle from the serves. As the jump serve is hit from a player jumping into the air, while an underarm is generally held around waist height or higher which changes the angle required to clear the net.
+													To adjust this scenario where the players can successfully complete the game, that of hitting their balls directly above the net will just require the player hitting the jump serve to delay their hit by \(t_{3} - t_{1} = 0.62\) seconds. However this is slightly unrealistic to try to exactly time that, so what is the general period of time that the balls must be hit in that will allow the balls to still collide given that a regulation volleyballs radius is \(11\)cm?
+													First, to find this time period we must adjust the parametric curve so that \(\mathbf{S}_{1}\) is delayed by \(0.62\) seconds:
+													\[x(t) = 0\]
+													\[y(t) = -9 + 24.37(t-0.62)\]
+													\[z(t) = 3.2 + 0.18(t-0.62) - 4.9(t-0.62)^{2}\]
+													\[\therefore d(t) = \sqrt{1119.62t^{2} - 2215.77t + 1096.27}\]
+													\[d(0.985) = 0\]
+													This new distance function now represents the distance between the two volleyballs given a delay in \(\mathbf{S}_{1}\), and is correct as at \(t = 0.99\) the distance between the two balls is \(0\) and they collide. Furthermore, to find the period in which the two balls will still collide even with an error when serving we must find \(d(t) < 0.22\), as the radius of a volleyball is \(11\)cm when the distance between the centre of each ball is less than \(22\)cm they will still collide. Using technology, (Desmos), this gives the values of \(t = 0.98\) and \(t = 0.99\). This shows that there is a \(0.01\) second leeway time when serving the ball with this situation in the game that will still allow for the balls to collide.
+													\section*{Other Stuff}
+													\section*{Angle of Collision}
+
+													To find the angle of collision of two parametric curves, the dot product between the direction vectors of the curves at the instance of collision must be found, the derivative, \(\mathbf{S}'_{1}\), of the curve will produce the tangent line to the 3D curve. In this case, the instances used will be when \(t = 0.83 \text{ for } \mathbf{S}_{1} \text{ and when } t = 1.46 \text{ for } \mathbf{S}_{3}\). Beginning with \(\mathbf{S}'_{1}\) 
+
+													\[x'(0.83) = 0\]
+													\[y'(0.83) = 24.37\]
+													\[z'(0.83) = 1.62 - 9.8(0.83)\]
+
+													\[\text{For }\mathbf{S}'_{3}\]
+
+													\[x'(1.46) = 0\]
+													\[y'(1.46) = 9.09\]
+													\[z'(1.46) = 6.47 - 9.8(1.46)\]
+
+													\[\text{Using the formula from earlier for the angle between two vectors gives }\theta = \cos^{-1}\frac{\mathbf{S}'_{1}\cdot\mathbf{S}'_{3}}{|\mathbf{S}'_{1}\mathbf{S}'_{3}|} = \]
+
+
+													\[\theta = \cos^{-1} \frac{\begin{pmatrix} 0 \\ 24.37 \\ -6.514 \end{pmatrix} \cdot \begin{pmatrix} 0 \\ 9.09 \\ 7.838 \end{pmatrix}}{ \left| \begin{pmatrix} 0 \\ 24.37 \\ -6.514 \end{pmatrix} \right| \left| \begin{pmatrix} 0 \\ 9.09 \\ 7.838 \end{pmatrix} \right| }\]
+													\[\theta = \cos^{-1} \frac{170.467}{\sqrt{636.329}\sqrt{144.06}}\]
+													\[\theta = \SI{55.7}{\degree} = \SI{0.972}{\radian}\]
+
+
+													\begin{figure}[hbtp]
+														\centering
+														\begin{tikzpicture}[scale = 0.7]
+															\begin{axis}[
+																view={90}{0},
+																axis lines=center,
+																xlabel=$x$, ylabel=$y$, zlabel=$z$,
+																axis on top,
+																axis equal image,
+																grid=major,
+																hide x axis,
+																hide y axis,
+																hide z axis,
+																enlargelimits=false,
+																zmin = 0, zmax = 3.2,
+																plot box ratio={1 1 1},
+																xtick={-10},
+																ytick={-10},
+																ztick={-10,-10},
+																scale = 3.25,
+																axis line style = {
+																	opacity=0.5,
+																	dash pattern = on 8pt off 8pt,
+																},
+																shader=flat,
+																]
+
+																% court rectangle
+																\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+																	(4.5, 9, 0)
+																	(-4.5, 9, 0)
+																	(4.5, -9, 0)
+																	(-4.5, -9, 0)
+																};
+
+																% net rectangle
+																\addplot3[surf, mesh/rows=2, fill=white, draw=black, opacity=0.75] coordinates {
+																	(4.5, 0, 1.42)
+																	(-4.5, 0, 1.42)
+																	(4.5, 0, 2.43)
+																	(-4.5, 0, 2.43)
+																};
+
+																% serve points
+																\addplot3[only marks] coordinates {
+																	(0, -9, 3.2)
+																	(0, 9, 1)
+																};
+
+																\node at (axis cs:0,-9,3.2) [anchor=east] {$S_1$};
+																\node at (axis cs:0,9,1) [anchor=west] {$S_3$};
+
+																% serve markers
+																\addplot3[->, dashed] coordinates {
+																	(0, -9, 0) 
+																	(0, -9, 3.2)
+																};
+																\addplot3[->, dashed] coordinates {
+																	(0, 9, 0) 
+																	(0, 9, 1)
+																};
+
+																% serve lines
+																\addplot3[
+																domain=0:0.37,
+																samples=50,
+																samples y=0,
+																thick,
+																color=black,
+																]
+																(
+																{0},
+																{-9 + 24.37 * x},
+																{3.2 + 0.18 * x - 4.9 * x^2}
+																);
+
+																\addplot3[
+																domain=0:0.99,
+																samples=50,
+																samples y=0,
+																thick,
+																color=black,
+																]
+																(
+																{0},
+																{9 - 9.09 * x},
+																{1 + 6.47 * x - 4.9 * x^2}
+																);
+
+																\addplot3[
+																domain=-0.045:0.045,  % Choose a domain for the tangent line (can be adjusted)
+																samples=50,
+																thick,
+																color=red,  % To distinguish the tangent line
+																]
+																(
+																{0},  % dx/dt = 0, so x is constant
+																{-9.09 * x},  % y'(t) = 9.09
+																{2.6 + (-7.81 * x)}  % z'(t) = -7.81, starting at z=2.6
+																);
+
+																\addplot3[
+																domain=-0.025:0.025,  % Choose a domain for the tangent line (can be adjusted)
+																samples=50,
+																thick,
+																color=red,  % To distinguish the tangent line
+																]
+																(
+																{0},  % dx/dt = 0, so x is constant
+																{24.37 * x},  % y'(t) = 9.09
+																{2.6 + (-6.514 * x)}  % z'(t) = -7.81, starting at z=2.6
+																);
+
+															\end{axis}
+														\end{tikzpicture}
+														\caption{Visualisation of the angle of the serves colliding}
+													\end{figure}
+
+													Furthermore, the reflection angle of the two balls can be found then by comparing their slope to a vertical line of \(x=0\). Since \(\theta = \arctan|\frac{m_{1}-m_{2}}{1+m_{1}m_{2}}|\), but \(m_{1} = 0\), \(\theta = \arctan|m|\). This gets the two angles of \(\theta_{1} = \SI{15}{\degree}\) below the horizontal for \(\mathbf{S}_1\)'s slope and \(\theta_{1} = \SI{40}{\degree}\) below the horizontal for \(\mathbf{S}_3\)'s
+
+													\begin{center}
+														\begin{tikzpicture}[scale=1]
+															% Draw the x and y axis
+															\draw[->] (-3, 0) -- (3, 0) node[right] {$x$};
+															\draw[->] (0, -1) -- (0, 5) node[above] {$y$};
+
+															% Draw the first line: y = -0.26729x + 2.6
+															\draw[domain=-3:3, smooth, variable=\x, red] 
+															plot ({\x}, {-0.26729*\x + 2.6}) 
+															node[above right] {y = -0.26729x + 2.6};
+
+															% Draw the second line: y = -0.8591x + 2.6
+															\draw[domain=-3:3, smooth, variable=\x, blue] 
+															plot ({\x}, {0.8591*\x + 2.6}) 
+															node[below right] {y = 0.8591x + 2.6};
+
+															% Angle labels
+															\node at (-0.3, 1.9) {$50^\circ$};
+															\node at (0.4, 1.9) {$75^\circ$};
+															\node at (1.0, 2.7) {$55^\circ$};
+
+														\end{tikzpicture}
+													\end{center}
+
+													\section*{Generalisations}
+
+													\subsection*{Lines}
+
+													Some lines \(\mathbf{l}_1\) before generalisation is \(\mathbf{r}_{1}(t)\) however can be represented as \(\mathbf{A} + \mathbf{a}t\) which becomes \(\begin{pmatrix} \mathbf{A}_x \\ \mathbf{A}_y \\ \mathbf{A}_z \end{pmatrix} + t \begin{pmatrix} \mathbf{a}_x \\ \mathbf{a}_y \\ \mathbf{a}_z \end{pmatrix}\) \\
+													Some line \(\mathbf{l}_2\) before generalisation is \(\mathbf{r}_{2}(t)\) however can be represented as \(\mathbf{B} + \mathbf{b}t\) which becomes \(\begin{pmatrix} \mathbf{B}_x \\ \mathbf{B}_y \\ \mathbf{B}_z \end{pmatrix} + t \begin{pmatrix} \mathbf{b}_x \\ \mathbf{b}_y \\ \mathbf{b}_z \end{pmatrix}\) \\
+													Some line \(\mathbf{l}_3\) before generalisation is \(\mathbf{r}_{3}(t)\) however can be represented as \(\mathbf{C} + \mathbf{c}t\) which becomes \(\begin{pmatrix} \mathbf{C}_x \\ \mathbf{C}_y \\ \mathbf{C}_z \end{pmatrix} + t \begin{pmatrix} \mathbf{c}_x \\ \mathbf{c}_y \\ \mathbf{c}_z \end{pmatrix}\) \\
+													where for all cases \(0 \le t \le 1\)
+													\subsection*{Speed}
+													Since \(|v| = \) speed, it can be stated that speed of all three vectors can be found like so:
+													\[|\mathbf{a}| = \sqrt{\mathbf{a}^{2}_x + \mathbf{a}^{2}_y + \mathbf{a}^{2}_z}\]
+													\[|\mathbf{b}| = \sqrt{\mathbf{b}^{2}_x + \mathbf{b}^{2}_y + \mathbf{b}^{2}_z}\]
+													\[|\mathbf{c}| = \sqrt{\mathbf{c}^{2}_x + \mathbf{c}^{2}_y + \mathbf{c}^{2}_z}\]
+													\subsection*{Planes}
+													Since the net and court planes occupy the position of the \(\mathbf{z}\) and \(\mathbf{y}\) planes respectively. The generalisation of each can be like so:
+													\[z = \mathbf{N}\]
+													\[y = \mathbf{C}\]
+													Where \(\mathbf{N}\) and \(\mathbf{C}\) are any real numbers that represents a translation.
+													\subsection*{Angle of Lines from horizontal}
+													Using the same angle formula from before, but with a new horizontal direction vector of \(\vec{k} = \begin{pmatrix} 0 \\ \mathbf{k} \\ 0 \end{pmatrix}\) where \(\mathbf{k}\) is any real value and represents the scale factor along it and \(\vec{v}\) representing the direction vector of any lines from earlier. 
+													\[\cos \theta = \frac{\vec{v} \cdot \vec{k}}{|\vec{v}||\vec{k}|}\]
+													Due to the basic nature of \(\vec{k}\) this can be simplified down to 
+													\[\theta = \cos^{-1}\frac{v_{y}}{|v|}\]
+													Since:
+													\[|\vec{k}| = \mathbf{k}\]
+													\[\vec{v} \cdot \vec{k} = \mathbf{k}v_{y}\]
+													\subsection*{Parametric Curves}
+													The lines from earlier can be adjusted into parametric equations by using the formula stated in the 'Creating the parametric curves section'
+													Some curve \(S_{1}\) can be represented by three functions \[x(t) = x_{0} + v_{x}t\]
+													\[y(t) = y_{0} + v_{y}t\]
+													\[z(t) = z_{0} + v_{z}t - 4.9t^{2}\]
+													The previous line \(\mathbf{l}_1\) can be altered to 
+													\[x(t) = Ax_{0} + Ax_{1}t\]
+													\[y(t) = Ay_{0} + Ay_{1}t\]
+													\[z(t) = Az_{0} + Az_{1}t - 4.9t^{2}\]
+
+													The previous line \(\mathbf{l}_2\) can be altered to 
+													\[x(t) = Bx_{0} + Bx_{1}t\]
+													\[y(t) = By_{0} + By_{1}t\]
+													\[z(t) = Bz_{0} + Bz_{1}t - 4.9t^{2}\]
+
+													The previous line \(\mathbf{l}_3\) can be altered to 
+													\[x(t) = Cx_{0} + Cx_{1}t\]
+													\[y(t) = Cy_{0} + Cy_{1}t\]
+													\[z(t) = Cz_{0} + Cz_{1}t - 4.9t^{2}\]
+
+													The time when these parametric curves hit the net or court can be found by finding \[z(t) = 0 \text{ and } y(t) = 0\]
+
+													The generalised form of the adjusted curves can be represented as
+
+													The parametric curve \(\mathbf{A}\) after adjustments is 
+													\[x(t) = Ax_{0} + Ax_{1}t\]
+													\[y(t) = Ay_{0} + (Ay_{1} + A_{k})t\]
+													\[z(t) = Az_{0} + Az_{1}t - 4.9t^{2}\]
+
+													The parametric curve \(\mathbf{B}\) after adjustments is 
+													\[x(t) = Bx_{0} + Bx_{1}t\]
+													\[y(t) = By_{0} + (By_{1} + B_{k})t\]
+													\[z(t) = Bz_{0} + Bz_{1}t - 4.9t^{2}\]
+
+													The parametric curve \(\mathbf{C}\) after adjustments is 
+													\[x(t) = Cx_{0} + Cx_{1}t\]
+													\[y(t) = Cy_{0} + (Cy_{1} + C_{k})t\]
+													\[z(t) = Cz_{0} + Cz_{1}t - 4.9t^{2}\]
+
+													The distance between the two curves, in this example it is \(\mathbf{A} \text{ and } \mathbf{B}\) but can be any. 
+
+													\begin{equation}
+														\begin{split}
+															d(t) = & \sqrt{((Ax_{0} + Ax_{1}t) - (Bx_{0} + Bx_{1}t))^{2} \\
+																		 & + ((Ay_{0} + (Ay_{1} + A_{k})t) - (By_{0} + (By_{1} + B_{k})t))^{2} \\
+																		 & + ((Az_{0} + Az_{1}t - 4.9t^{2}) - (Bz_{0} + Bz_{1}t - 4.9t^{2}))^{2}}
+															\end{split}
+														\end{equation}
+
+														Deriving this function, and only using the numerator of the prodcued fraction will give ageneralised form of the distance between the two curves.
+
+														\begin{equation}
+															\begin{split}
+																d'(t) = & (Ax_{1} - Bx_{1})(Ax_{0} - Bx_{0} + (Ax_{1}-Bx_{1})t) \\
+																				& + ((Ay_{1} + A_{k}) - (By_{1} + B_{k}))(Ay_{0} - By_{0} + ((Ay_{1} + A_{k}) - (By_{1} + B_{k})t) \\
+																				& + (Az_{1} - Bz_{1})(Az_{0} - Bz_{0} + (Az_{1}-Bz_{1})t)
+															\end{split}
+														\end{equation}
+
+														\section*{Conclusion}
+
+														Throughout the construction of this game, there were many assumptions made which limited the accuracy of the calculations. It is assumed that there is no air-resistance force that would've slowed down in all directions as it moves through space. By considering gravity, an acceleration force would be applied to \(x(t), y(t) \text{ and } z(t)\). This would heavily complicate the process of adjusting the vectors to be able to clear the net and is why it was left out of this investigation. By setting the \(x\) coordinate of each serve in the game to be the same it is assuming that the players are able to accurately hit their balls in a straight line without any deviation. This is inaccurate and so the calculations are only accurate for a best case scenario. Furthermore, serve height will differ between players, so using the same assumptions for each serve is not accurate.
+
+														To conclude, there were numerous mathematical concepts used in this investigation that aided the process of finding the states and relationship between the serves in the game. By generalising the equations some of the assumptions can be accounted for, like serve height, \(x\) coordinate serving position, serve speed. However, air-resistance is still left unaccounted for. This investigation did fulfill the aim of this investigation, and found that there was an extremely small period of time in which two players can serve volleyballs and get them to collide over the net.
+
+														\bibliographystyle{ieeetr}
+														\bibliography{references}
+
+														\end{document}

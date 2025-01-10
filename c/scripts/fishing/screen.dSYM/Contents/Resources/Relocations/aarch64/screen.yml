@@ -1,0 +1,12 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     screen
+relocations:
+  - { offset: 0x26, size: 0x8, addend: 0x0, symName: _fontTextWidth, symObjAddr: 0x0, symBinAddr: 0x100003430, symSize: 0xCC }
+  - { offset: 0x6F7, size: 0x8, addend: 0x0, symName: _fontTextWidth, symObjAddr: 0x0, symBinAddr: 0x100003430, symSize: 0xCC }
+  - { offset: 0x757, size: 0x8, addend: 0x0, symName: _initialise, symObjAddr: 0xCC, symBinAddr: 0x1000034FC, symSize: 0x9C }
+  - { offset: 0x77B, size: 0x8, addend: 0x0, symName: _checkEvents, symObjAddr: 0x168, symBinAddr: 0x100003598, symSize: 0x388 }
+  - { offset: 0x7BB, size: 0x8, addend: 0x0, symName: _renderObjects, symObjAddr: 0x4F0, symBinAddr: 0x100003920, symSize: 0x310 }
+  - { offset: 0x89A, size: 0x8, addend: 0x0, symName: _exitSDL, symObjAddr: 0x800, symBinAddr: 0x100003C30, symSize: 0x64 }
+  - { offset: 0x8BE, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x864, symBinAddr: 0x100003C94, symSize: 0xDC }
+...

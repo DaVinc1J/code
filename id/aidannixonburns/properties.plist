@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CIN</key>
+	<string>D02054916</string>
+	<key>Address</key>
+	<string>13 NEVILLE AVE CLARENCE GARDENS SA 5039</string>
+	<key>Name</key>
+	<string>AIDAN NIXON-BURNS</string>
+	<key>DOB</key>
+	<string>21/10/2005</string>
+	<key>LicenceNumber</key>
+	<string>HJ2501</string>
+	<key>PED</key>
+	<string>30 October 2026</string>
+	<key>LED</key>
+	<string>30 October 2023</string>
+</dict>
+</plist>
