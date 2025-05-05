@@ -1,0 +1,8 @@
+CompileFlags:
+  Add: [
+    -I/usr/include,         # Standard include path
+    -I/usr/include/vulkan,  # Vulkan headers
+    -I/usr/include/GLFW,    # GLFW headers (if needed)
+    -lvulkan,               # Link against Vulkan
+    -lglfw                  # Link against GLFW
+  ]

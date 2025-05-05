@@ -2,8 +2,9 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#include <GL/gl.h>
 #include <SDL2/SDL.h>
-#include <SDL2_ttf/SDL_ttf.h>
+#include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,19 +22,19 @@
 typedef SDL_Color SDL_Colour;
 
 typedef enum {
-	FONT_SIZE_EXTRA_SMALL,
-	FONT_SIZE_SMALL,
-	FONT_SIZE_MEDIUM,
-	FONT_SIZE_LARGE,
-	FONT_SIZES
+  FONT_SIZE_EXTRA_SMALL,
+  FONT_SIZE_SMALL,
+  FONT_SIZE_MEDIUM,
+  FONT_SIZE_LARGE,
+  FONT_SIZES
 } font_size_enum;
 
 typedef enum {
-	FONT_REGULAR,
-	FONT_BOLD,
-	FONT_ITALIC,
-	FONT_BOLD_ITALIC,
-	FONT_TYPES
+  FONT_REGULAR,
+  FONT_BOLD,
+  FONT_ITALIC,
+  FONT_BOLD_ITALIC,
+  FONT_TYPES
 } font_enum;
 
 #endif

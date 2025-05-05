@@ -1,20 +1,31 @@
 CC = clang
-CFLAGS = -g -F/Library/Frameworks -std=c11
-LDFLAGS = -framework SDL2 -framework SDL2_ttf -Wl,-rpath,/Library/Frameworks -lc -nostdlib++ -lobjc
+CFLAGS_MAIN = -g -std=c11 -ltcmalloc
+LDFLAGS_MAIN = -lSDL2 -lSDL2_ttf -lGL -lGLU -lc -nostdlib++ -lm
 
-FILES = fonts.c main.c ui.c
-OUTPUT = test1
-ENTITLEMENTS = entitlements.plist
+CFLAGS_TEST = -g -std=c11 -ltcmalloc
+LDFLAGS_TEST = -lvulkan -lc -lm
 
-all: $(OUTPUT)
-	./$(OUTPUT)
+MAIN_FILES = fonts.c main.c ui.c
+TEST_FILES = vulkan_fonts.c vulkan_main.c vulkan_ui.c
+MAIN_OUTPUT = main
+TEST_OUTPUT = test
 
-$(OUTPUT): $(FILES)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
-	@#
-	codesign --force --sign - --entitlements $(ENTITLEMENTS) $@
+.PHONY: all main test clean clean_main clean_test
 
-clean:
-	rm -f $(OUTPUT)
+all: main
 
-.PHONY: all clean
+main: $(MAIN_FILES)
+	$(CC) $(CFLAGS_MAIN) $(LDFLAGS_MAIN) -o $(MAIN_OUTPUT) $^
+	./$(MAIN_OUTPUT)
+
+test: $(TEST_FILES)
+	$(CC) $(CFLAGS_TEST) $(LDFLAGS_TEST) -o $(TEST_OUTPUT) $^
+	./$(TEST_OUTPUT)
+
+clean: clean_main clean_test
+
+clean_main:
+	rm -f $(MAIN_OUTPUT)
+
+clean_test:
+	rm -f $(TEST_OUTPUT)

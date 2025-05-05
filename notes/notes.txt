@@ -1,0 +1,6 @@
+Motherboard: GA-H170M-D3H
+CPU: Intel i7
+Power supply: CoolerMaster Thunder 600W Power Supply
+External Storage: 2TB
+RAM: 16GB
+Graphics Card: MSI GTX 970 4GD5T OCV1
