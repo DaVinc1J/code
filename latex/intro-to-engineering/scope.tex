@@ -1,0 +1,107 @@
+\documentclass[a4paper,12pt]{report}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\usepackage[hyphens]{url}
+\usepackage[round]{natbib}
+\usepackage[pdftex]{graphicx}
+\usepackage{lipsum}
+\usepackage{hyperref}
+
+\author{Tristan Lowe}
+\title{EWB Challenge Scoping Report}
+
+\begin{document}
+\setlength{\parskip}{6pt}
+
+\begin{titlepage}
+\begin{center}
+\includegraphics[width=0.75\textwidth]{./UoA.png}\\[1.0cm]    
+\textsc{\LARGE Faculty of Sciences, Engineering and Technology}\\[1.0cm]
+\textsc{\Large ENG 1001 - Introduction to Engineering}\\[0.5cm]
+\HRule \\[0.4cm]
+{ \huge \bfseries EWB Challenge Scoping Report}\\[0.4cm]
+\HRule \\[0.4cm]
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Author:}\\
+Tristan Lowe
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Student number:} \\
+a1968378
+\end{flushright}
+\end{minipage}
+\vfill
+Word Count:\\
+992\\[0.4cm]
+{\large \today}
+\end{center}
+\end{titlepage}
+
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+\setcounter{chapter}{1}
+\renewcommand{\thesection}{\arabic{section}}
+
+\section{Introduction and Project Scope}
+
+This report has been prepared to investigate and propose strategies for improving access to clean, sustainable drinking water on Saibai Island. This is done through a project set up by \textbf{EWB}, Engineering without Borders, in collaboration with the \textbf{TSIRC}, Torrens Strait Island Regional Council. It aims to understand the needs and consider the requirements of the Saibai islanders by creating a preliminary technical assessment and evaluate potential design options with key assumptions and considerations. Saibai Island is home to around 340 residents, with approximately 85.5\% identifying as Torres Strait Islanders, specifically the Moegibuway and Koeybuway peoples and those from Papua New Guinea \citep{indigenous_gov_2023}. It still holds a very strong indigenous culture unlike a lot of mainland Australia; however, external aid, if not community-driven, can risk only further perpetuating historic colonial harm under the guise of development. Saibai Island faces many climate challenges, including those of rising sea levels, saltwater encroachment into the water supply and limited infrastructure which is largely due to the historical impact of western colonialism in the region and the interruption of economic development \citep{ewb_saibai_2024}. Therefore, this report will focus on sustainable, community led alternatives for sourcing water that gives power over key utilities back to the people, and lead by the people. It aims to provide a contextual assessment of the future of rainwater harvesting and freshwater harvesting from the island's 6.5-hectare lagoon that is not a generic, bandaid solution.
+
+\section{Client Needs}
+
+Saibai Island, like all other Aboriginal and Torres Strait Islander communities have a long history of self-sufficiency that was only interrupted by the racist, colonial and exploitative policies of the UK. Effective solutions then, must prioritise returning the Saibai islanders self-determination and long-term sustainability. Any proposed system, to be effective, must be community led and economically viable; as demonstrated in La Mancalona in the Yucatán Peninsula, Mexico where, for a small fee (5 pesos for 20L), a clean water system was established that allowed the income to fund the system and then back into the community. This system led to improved health, reduced costs and reinvestment into local infrastructure, thus reinforcing the resolve and strength of the local community \citep{la_mancalona}. A similar on Saibai would not only lead to a stable, sustainable and more effective water system but empower community development and put the economic development of their island into the hands of the Saibai people, like it was before the colonial project of Australia. Furthermore, it would reduce the community's dependency on state/federal aid, of which (in specifically Aboriginal/Torres Strait Islander projects) often only funds middlemen and opportunists \citep{corruption_indigenous}.
+
+\section{Preliminary Assessment of Design Options}
+
+Before assessing the design options, it is imperative to acknowledge that remote communities often consume high quantities of water per capita, this is not out of wastefulness but because water serves as a substitute for other available resources. For example, pouring water to cool down hot tin roofs can serve as an effective solution to the absence of air conditioning, or using excess water when cleaning tools due to lacking proper cleaning supplies. Therefore, it must be understood that improving the water system in Saibai Island is not an isolated system \citep{remote_water_convo}.
+
+There are several viable solutions that exist, of which should be considered together as parts of a solution not separate solutions.
+
+\begin{itemize}
+	\item Saltwater encroachment into freshwater sources is major, especially considering Saibai Island is on average 1m above sea level. Restoration of native mangroves is a potential solution to combat saltwater intrusion, flooding and sea level rise, as Saibai Island is surrounded by marshes. The removal of invasive species goes hand in hand as well due to how they threaten the pre-existing wetland habitats \citep{mangrove_research}.
+  
+  \item Saibai island already has household-based water tanks, however there are many upgrades that could be done to improve the quality of them.
+  
+  \item First-flush diverters can be installed to remove initial contaminants from the first load of rainfall
+  
+  \item Charcoal/Biosand filters are a cheap and effective filtration system for potable water that removes potential biological/chemical hazards.
+  
+  \item Just increasing the number of water tanks on the island to be able to store more water during the wet season.
+  
+	\item It is a known issue that the piping out of the lagoon has issues, and just merely fixing this could improve the throughput to the pre-existing chlorination facility and provide more substitutive quality water \citep{lagoon_pipe_report}.
+\end{itemize}
+
+\section{Design Considerations and Assumptions}
+
+The proposed solutions must take into account the following critical factors that posit Saibai Island as a more involved project.
+
+\begin{itemize}
+  \item Saibai Island is in a remote location, and therefore any solution must take into account the increased costs related to transporting materials, personnel and equipment to the island, as well as maintaining the resulting systems. Furthermore, limited infrastructure adds complexity.
+  
+  \item Community involvement is a requirement and so will require additional systems put in place to inquire and conclude on a solution with those living on Saibai Island.
+  
+  \item Climate resilience is an important factor for the future of Saibai Island, as rising sea levels and extreme rainfall and weather activity mean any system must be robust and adaptable and work to improve the climate resilience of the island, not a negligible/negative impact
+  
+  \item There are many metrics to consider when implementing a system that must be accounted for in planning, namely those of
+  \begin{itemize}
+    \item CO$_2$ emissions during construction and maintenance
+    \item The reusability/recyclability of the material, ideally completely self-dependent
+    \item The short- and long-term impact on the local ecosystem and land use
+    \item Water security across seasons, as systems like household water tanks might work well during the wet seasons, an entirely different must be viable and possible during the dry season.
+  \end{itemize}
+\end{itemize}
+
+\section{Conclusion}
+
+The accessibility and quality of clean water on Saibai Island cannot be resolved through a singular engineering fix. Any effective solutions must be decentralised, multi-layered and informed by the lived realities of those living on Saibai themselves. By coming traditional knowledge with sustainable engineering practices, the project can support infrastructure development but also community-led growth that can expand to other aspects of life on Saibai. The recommendations in this report therefore offer a roadmap to restore water independence to Saibai, not a solution.
+
+\newpage
+\bibliographystyle{chicago}
+\bibliography{myrefs}
+
+\end{document}
