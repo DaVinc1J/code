@@ -1,0 +1,59 @@
+This is BibTeX, Version 0.99d (TeX Live 2024)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: scope.aux
+The style file: chicago.bst
+Database file #1: myrefs.bib
+Warning--no number and no volume in corruption_indigenous
+Warning--page numbers missing in corruption_indigenous
+Warning--no number and no volume in ewb_saibai_2024
+Warning--page numbers missing in ewb_saibai_2024
+Warning--no number and no volume in indigenous_gov_2023
+Warning--page numbers missing in indigenous_gov_2023
+Warning--no number and no volume in mangrove_research
+Warning--page numbers missing in mangrove_research
+Warning--no number and no volume in remote_water_convo
+Warning--page numbers missing in remote_water_convo
+Warning--no number and no volume in lagoon_pipe_report
+Warning--page numbers missing in lagoon_pipe_report
+You've used 7 entries,
+            2861 wiz_defined-function locations,
+            648 strings with 5890 characters,
+and the built_in function-call counts, 4027 in all, are:
+= -- 346
+> -- 260
+< -- 0
++ -- 72
+- -- 100
+* -- 307
+:= -- 773
+add.period$ -- 21
+call.type$ -- 7
+change.case$ -- 45
+chr.to.int$ -- 7
+cite$ -- 19
+duplicate$ -- 113
+empty$ -- 248
+format.name$ -- 112
+if$ -- 717
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 7
+newline$ -- 38
+num.names$ -- 70
+pop$ -- 24
+preamble$ -- 1
+purify$ -- 87
+quote$ -- 0
+skip$ -- 135
+stack$ -- 0
+substring$ -- 165
+swap$ -- 35
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 140
+warning$ -- 12
+while$ -- 72
+width$ -- 0
+write$ -- 93
+(There were 12 warnings)
